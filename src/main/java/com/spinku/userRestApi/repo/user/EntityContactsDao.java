@@ -15,15 +15,18 @@ public class EntityContactsDao {
 //    @Autowired
 //    private DataSource dataSource;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "dbuserPU")
     private EntityManager entityManagerContact;
 
     public void insertContact(EntityContacts dataContact) {
         entityManagerContact.persist(dataContact);
     }
 
-    public List<EntityContacts> selectAllContact() {
-        Query query = entityManagerContact.createQuery("SELECT c FROM EntityContacts c");
+    public List<EntityContacts> selectAllContact(Long id) {
+        Query query = entityManagerContact.createQuery("FROM EntityContacts c where c.id.id = " + id + " ");
+        System.out.println("query : " + query);
+//        System.out.println("query.getResultList()" + query.getResultList());
+
         return (List<EntityContacts>) query.getResultList();
     }
 
@@ -33,7 +36,5 @@ public class EntityContactsDao {
         return entityManagerContact.createNamedQuery("EntityContacts.findByIdUser").setParameter("id", id_user).getResultList();
 
     }
-
-    
 
 }

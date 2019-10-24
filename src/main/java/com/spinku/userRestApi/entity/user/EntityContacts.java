@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,18 +40,15 @@ public class EntityContacts implements Serializable {
     @Column(name = "photo")
     private String photo;
 
-    @ManyToOne//@JoinColumn(name = "id_user", referencedColumnName = "id")
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)// FetchType.EAGER
+    @JoinColumn(name = "id", referencedColumnName = "id")//
     private EntityUsers id;
 
     public EntityContacts() {
 
     }
 
-    public EntityContacts(Long contactId, String userName,
-            @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email Address") String email,
-            String realname, String photo, EntityUsers id) {
-        super();
+    public EntityContacts(Long contactId, String userName, String email, String realname, String photo, EntityUsers id) {
         this.contactId = contactId;
         this.userName = userName;
         this.email = email;
@@ -106,6 +104,9 @@ public class EntityContacts implements Serializable {
     public void setId(EntityUsers id) {
         this.id = id;
     }
+
+    
+    
 
     @Override
     public int hashCode() {

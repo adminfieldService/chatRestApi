@@ -43,7 +43,7 @@ public class OpenFireSourceConfig {
     @Primary
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource mysqlDataSource() {
+    public DataSource postgresqlDataSource1() {
         /*
 		 * return DataSourceBuilder .create() .build();
          */
@@ -60,8 +60,8 @@ public class OpenFireSourceConfig {
     @Primary
     @Bean(name = "openFireEntityManager")
     public LocalContainerEntityManagerFactoryBean postgresqlEntityManagerFactory(EntityManagerFactoryBuilder builder) {
-        return builder.dataSource(mysqlDataSource()).properties(hibernateProperties())
-                .packages("com.spinku.userRestApi.entity").persistenceUnit("openFire_PU").build();
+        return builder.dataSource(postgresqlDataSource1()).properties(hibernateProperties())
+                .packages("com.spinku.userRestApi.entity").persistenceUnit("openFirePU").build();
     }
 
     @Primary

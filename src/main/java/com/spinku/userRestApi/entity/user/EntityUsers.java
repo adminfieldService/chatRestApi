@@ -3,6 +3,7 @@ package com.spinku.userRestApi.entity.user;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -64,11 +65,8 @@ public class EntityUsers implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
-    @OneToMany(mappedBy = "id")
-    private Collection<EntityContacts> entityContacts;
-
-    public EntityUsers() {
-    }
+    @OneToMany(mappedBy = "id")//FetchType.LAZY //FetchType.EAGER
+    private List<EntityContacts> entityContacts;
 
     public static enum Gender {
 
@@ -78,12 +76,10 @@ public class EntityUsers implements Serializable {
         }
     }
 
-    public EntityUsers(Long id, String userName, String roleName, String userPass, String passUser, String address,
-            String nomorIMEI, boolean isActive,
-            @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email Address") String email,
-            Date dateRegister, Date dateLasetLogin, String timeLastLogin, String sesionID, String device_id_login,
-            String token, Gender gender, Collection<EntityContacts> entityContacts) {
-        super();
+    public EntityUsers() {
+    }
+
+    public EntityUsers(Long id, String userName, String roleName, String userPass, String passUser, String address, String nomorIMEI, boolean isActive, String email, Date dateRegister, Date dateLasetLogin, String timeLastLogin, String sesionID, String device_id_login, String token, Gender gender, List<EntityContacts> entityContacts) {
         this.id = id;
         this.userName = userName;
         this.roleName = roleName;
@@ -231,11 +227,19 @@ public class EntityUsers implements Serializable {
         this.gender = gender;
     }
 
-    public Collection<EntityContacts> getEntityContacts() {
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public List<EntityContacts> getEntityContacts() {
         return entityContacts;
     }
 
-    public void setEntityContacts(Collection<EntityContacts> entityContacts) {
+    public void setEntityContacts(List<EntityContacts> entityContacts) {
         this.entityContacts = entityContacts;
     }
 

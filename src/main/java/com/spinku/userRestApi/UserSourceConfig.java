@@ -56,7 +56,7 @@ public class UserSourceConfig {
     @Bean(name = "userEntityManager")
     public LocalContainerEntityManagerFactoryBean postgresqlEntityManagerFactory(EntityManagerFactoryBuilder builder) {
         return builder.dataSource(postgresqlDataSource()).properties(hibernateProperties())
-                .packages("com.spinku.userRestApi.entity.user").persistenceUnit("user_PU").build();//com.spinku.userRestApi.entity.user
+                .packages("com.spinku.userRestApi.entity.user").persistenceUnit("dbuserPU").build();//com.spinku.userRestApi.entity.user
     }
 
     @Bean(name = "userTransactionManager")

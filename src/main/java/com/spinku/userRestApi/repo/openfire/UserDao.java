@@ -15,7 +15,7 @@ public class UserDao {
 //    @Autowired
 //    private DataSource dataSource;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "openFirePU")
     private EntityManager entityManagerUser;
 
     public Ofuser selectUserById(long username) {

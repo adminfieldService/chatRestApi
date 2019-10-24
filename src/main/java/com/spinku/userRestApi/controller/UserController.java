@@ -143,10 +143,11 @@ public class UserController {
     }
 
     @GetMapping("/api/viewallcontact")
-    public List<EntityContacts> viewAllContact() {
-        System.out.println("contactService 1:" + contactService);
-        System.out.println("contactService :" + contactService.getAllContact());
-        return contactService.getAllContact();
+    public List<EntityContacts> viewAllContact(Long id) {
+        id = 2l;
+//        System.out.println("contactService 1:" + contactService);
+//        System.out.println("contactService :" + contactService.getAllContact());
+        return contactService.getAllContact(id);
     }
 
     @PostMapping("/api/addcontact")

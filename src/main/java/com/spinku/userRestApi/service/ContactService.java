@@ -25,8 +25,8 @@ public class ContactService {
     }
 
     @Transactional
-    public List<EntityContacts> getAllContact() {
-        return contactDao.selectAllContact();
+    public List<EntityContacts> getAllContact(Long id) {
+        return contactDao.selectAllContact(id);
 
     }
 
