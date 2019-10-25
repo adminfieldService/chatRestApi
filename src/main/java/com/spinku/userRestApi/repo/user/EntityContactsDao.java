@@ -23,7 +23,7 @@ public class EntityContactsDao {
         try {
 //            System.out.println("idUsers : " + id);
 //            String sql = "from EntityContacts o where o.id = :idUsers";
-            String sql = "from EntityContacts as o LEFT JOIN o.entityUsers as u where u.id = :idUsers";
+            String sql = "from EntityContacts as o JOIN fetch o.entityUsers as u where u.id = :idUsers";
             Query query = entityManagerContact.createQuery(sql);
             query.setParameter("idUsers", id);
 //         return entityManagerContact.createQuery("select object(o) from EntityContacts as o LEFT JOIN o.entityUsers as u where u.id = " + id).getResultList();

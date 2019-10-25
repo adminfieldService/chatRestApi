@@ -1,8 +1,10 @@
 package com.spinku.userRestApi.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,8 +41,8 @@ public class EntityContacts implements Serializable {
     private String realname;
     @Column(name = "photo")
     private String photo;
-
-    @ManyToOne()
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "id")
     private EntityUsers entityUsers;
 
