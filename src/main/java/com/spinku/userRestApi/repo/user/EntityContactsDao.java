@@ -19,16 +19,16 @@ public class EntityContactsDao {
         entityManagerContact.persist(dataContact);
     }
 
-    public List<EntityContacts> selectAllContact(Long id) {
+    public List<EntityContacts> selectAllContact(Long idUsers) {
         try {
 //            System.out.println("idUsers : " + id);
 //            String sql = "from EntityContacts o where o.id = :idUsers";
             String sql = "from EntityContacts as o JOIN fetch o.entityUsers as u where u.id = :idUsers";
             Query query = entityManagerContact.createQuery(sql);
-            query.setParameter("idUsers", id);
+            query.setParameter("idUsers", idUsers);
 //         return entityManagerContact.createQuery("select object(o) from EntityContacts as o LEFT JOIN o.entityUsers as u where u.id = " + id).getResultList();
-            System.out.println("sql : " + sql);
-            System.out.println("query.getResultList() : " + query.getResultList());
+//            System.out.println("sql : " + sql);
+//            System.out.println("query.getResultList() : " + query.getResultList());
 //        System.out.println("query.getResultList()" + query.getResultList());
             return (List<EntityContacts>) query.getResultList();
         } catch (Exception ex) {

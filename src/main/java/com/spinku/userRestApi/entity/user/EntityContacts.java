@@ -42,7 +42,7 @@ public class EntityContacts implements Serializable {
     @Column(name = "photo")
     private String photo;
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)//FetchType.LAZY
     @JoinColumn(name = "id")
     private EntityUsers entityUsers;
 

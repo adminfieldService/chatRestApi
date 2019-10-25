@@ -48,17 +48,17 @@ public class UserController {
 //    private ContactService contactService;
 
     /**/
-    String jwtToken = "";
-    Object sing = "";
-    String role = "user";
-    String message = "";
-    String type = "";
-    String pwd = "";
-    String uname = "";
-    String email = "";
-    String password = "";
-    String username = "";
-    JSONObject jsonobj = new JSONObject();
+//    String jwtToken = "";
+//    Object sing = "";
+//    String role = "user";
+//    String message = "";
+//    String type = "";
+//    String pwd = "";
+//    String uname = "";
+//    String email = "";
+//    String password = "";
+//    String username = "";
+//    JSONObject jsonobj = new JSONObject();
 
     /**/
     /**
@@ -87,15 +87,25 @@ public class UserController {
 
     @GetMapping("/api/viewalluser")
     public List<Ofuser> viewAllUser() {
-        System.out.println("userService 1:" + userService);
-        System.out.println("userService" + userService.getAllUser());
+//        System.out.println("userService 1:" + userService);
+//        System.out.println("userService" + userService.getAllUser());
         return userService.getAllUser();
     }
 
     @PostMapping(path = "/api/login")
+//    public String login(@RequestBody Ofuser login) throws ServletException {
     public String login(@RequestBody Ofuser login) throws ServletException {
-//    public void login(@RequestBody Ofuser login) throws ServletException {
-
+        String jwtToken = "";
+        Object sing = "";
+        String role = "user";
+        String message = "";
+        String type = "";
+        String pwd = "";
+        String uname = "";
+        String email = "";
+        String password = "";
+        String username = "";
+        JSONObject jsonobj = new JSONObject();
 //	    
         if (login.getEmail() == null || login.getEncryptedpassword() == null) {
             throw new ServletException("Please fill in email and password");
@@ -105,58 +115,85 @@ public class UserController {
         email = login.getEmail();
         password = login.getEncryptedpassword();
         username = login.getUsername();
-
-        System.out.println("email" + email + "-password" + password);
-        List<Ofuser> OfuserList = userService.findByEmail(email);
-        System.out.println("OfuserList" + OfuserList);
-
-        if (OfuserList == null) {
-//	    	   throw new ServletException("User email not found.");
-            message = "User email not found.";
+        List<Ofuser> OfuserList = null;
+//        
+        if (email.isEmpty() || password.isEmpty() || email.contentEquals("") || password.contentEquals("") || username.isEmpty() || username.contentEquals("")) {
+            message = "Please fill in email and password";
             jsonobj.put("typ", type);
             jsonobj.put("alg", sing);
             jsonobj.put("token", jwtToken);
             jsonobj.put("message", message);
 //
+            return jsonobj.toString();
+        } else {
+            System.out.println("email" + email + "-password" + password);
+            OfuserList = userService.findByEmail(email);
+            System.out.println("OfuserList" + OfuserList);
         }
-        pwd = OfuserList.get(0).getEncryptedpassword();
-        uname = OfuserList.get(0).getUsername();
-        System.out.println("uname" + uname + "-pwd" + pwd);
-        System.out.println("username" + username + "-password" + password);
-//	if (!password.equals(pwd) || !username.equals(uname)) {
-        if (pwd == null || uname == null) {
-//	    throw new ServletException("Invalid login. Please check your email and password.");
-            message = "Invalid login. Please check your email and password.";
+
+        if (OfuserList == null || OfuserList.isEmpty()) {
+            message = "User email not found.";
             jsonobj.put("typ", type);
-            jsonobj.put("alg", sing);
+//            jsonobj.put("alg", sing);
             jsonobj.put("token", jwtToken);
             jsonobj.put("message", message);
-
+//
+            return jsonobj.toString();
         } else {
+            pwd = OfuserList.get(0).getEncryptedpassword();
+            uname = OfuserList.get(0).getUsername();
+            System.out.println("uname" + uname + "-pwd" + pwd);
+            System.out.println("username" + username + "-password" + password);
+//        }
+//	if (!password.equals(pwd) || !username.equals(uname)) {
+            if (pwd == null || uname == null) {//|| email.isEmpty() || password.isEmpty() || email.contentEquals("") || password.contentEquals("")
+//	    throw new ServletException("Invalid login. Please check your email and password.");
+                message = "Invalid login. Please check your email and password.";
+                jsonobj.put("typ", type);
+//                jsonobj.put("alg", sing);
+                jsonobj.put("token", jwtToken);
+                jsonobj.put("message", message);
 
-            sing = SignatureAlgorithm.HS256;
-            jwtToken = Jwts.builder().setSubject(email).claim("roles", role).setIssuedAt(new Date())
-                    .signWith((SignatureAlgorithm) sing, "secretkey").compact();
-            type = "JWT";
-            message = "Success Sign In.";
-//            viewAllContact(2l);
+                return jsonobj.toString();
+
+            } else {
+
+                sing = SignatureAlgorithm.HS256;
+                jwtToken = Jwts.builder().setSubject(email).claim("roles", role).setIssuedAt(new Date())
+                        .signWith((SignatureAlgorithm) sing, "secretkey").compact();
+                type = "JWT";
+                message = "Success Sign In.";
+
 //            System.out.println("viewAllContact" + viewAllContact(2l).listIterator());
+                viewAllContact(jsonobj, 2l, type, sing, jwtToken, message, uname);
+            }
+            return jsonobj.toString();
         }
 
-        jsonobj.put("typ", type);
-        jsonobj.put("alg", sing);
-        jsonobj.put("token", jwtToken);
-        jsonobj.put("message", message);
-        jsonobj.put("uname", uname);
-
-        return jsonobj.toString();
+//        jsonobj.put("typ", type);
+//        jsonobj.put("alg", sing);
+//        jsonobj.put("token", jwtToken);
+//        jsonobj.put("message", message);
+//        jsonobj.put("uname", uname);
     }
 
     @GetMapping("/api/viewallcontact")
-    public List<EntityContacts> viewAllContact(Long id) {
-        id = 2l;
-//        System.out.println("contactService 1:" + contactService);
-//        System.out.println("contactService :" + contactService.getAllContact());
+//  public List<EntityContacts> viewAllContact(Long id, String type, Object o, String token, String message, String uname) {
+    public List<EntityContacts> viewAllContact(JSONObject json, Long id, String type, Object o, String token, String message, String uname) {
+//        id = 2l;
+//        String contacts = "";
+//        contacts = contactService.getAllContact(id).toString();
+//        System.out.println(" viewAllContact :" + id + ";" + type + ";" + o + ";" + token + ";" + message + ";" + uname);
+        System.out.println("contactService id:" + id);
+//        System.out.println("contactService :" + contactService.getAllContact(id));
+
+//        json.put("token", token);
+//        json.put("message", message);
+//        json.put("uname", uname);
+//        json.put("contacts", contacts);
+//        JSONObject jsonNilai = new JSONObject();
+//        jsonNilai.put("nilai", contactService.getAllContact(id));
+//        return jsonobj.toString();
         return contactService.getAllContact(id);
     }
 

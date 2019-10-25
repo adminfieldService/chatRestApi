@@ -66,11 +66,10 @@ public class EntityUsers implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
-//    https://stackoverflow.com/questions/48153246/could-not-write-json
-//    @JsonIgnore
+//    http://www.voidcn.com/article/p-chooekyk-qg.html
 //    @OneToMany(mappedBy = "entityUsers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)//, fetch = FetchType.EAGER
     @JsonIgnore
-    @OneToMany(mappedBy = "entityUsers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "entityUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<EntityContacts> entityContacts;
 
     public static enum Gender {
