@@ -47,6 +47,24 @@ public class UserController {
 //    private UserService userService;
 //    private ContactService contactService;
 
+    /**/
+    String jwtToken = "";
+    Object sing = "";
+    String role = "user";
+    String message = "";
+    String type = "";
+    String pwd = "";
+    String uname = "";
+    String email = "";
+    String password = "";
+    String username = "";
+    JSONObject jsonobj = new JSONObject();
+
+    /**/
+    /**
+     *
+     * @param user
+     */
     @PostMapping("/api/createuser")
     public void createNewUser(@Valid @RequestBody Ofuser user) {
         userService.addUser(user);
@@ -76,18 +94,8 @@ public class UserController {
 
     @PostMapping(path = "/api/login")
     public String login(@RequestBody Ofuser login) throws ServletException {
+//    public void login(@RequestBody Ofuser login) throws ServletException {
 
-        String jwtToken = "";
-        Object sing = "";
-        String role = "user";
-        String message = "";
-        String type = "";
-        String pwd = "";
-        String uname = "";
-        String email = "";
-        String password = "";
-        String username = "";
-        JSONObject jsonobj = new JSONObject();
 //	    
         if (login.getEmail() == null || login.getEncryptedpassword() == null) {
             throw new ServletException("Please fill in email and password");
@@ -132,21 +140,21 @@ public class UserController {
             type = "JWT";
             message = "Success Sign In.";
 //            viewAllContact(2l);
-            System.out.println("viewAllContact"+viewAllContact(2l).listIterator());
+//            System.out.println("viewAllContact" + viewAllContact(2l).listIterator());
         }
-        
+
         jsonobj.put("typ", type);
         jsonobj.put("alg", sing);
         jsonobj.put("token", jwtToken);
         jsonobj.put("message", message);
         jsonobj.put("uname", uname);
-        return jsonobj.toString();
 
+        return jsonobj.toString();
     }
 
     @GetMapping("/api/viewallcontact")
     public List<EntityContacts> viewAllContact(Long id) {
-//        id = 2l;
+        id = 2l;
 //        System.out.println("contactService 1:" + contactService);
 //        System.out.println("contactService :" + contactService.getAllContact());
         return contactService.getAllContact(id);

@@ -68,7 +68,7 @@ public class EntityUsers implements Serializable {
     private Gender gender;
 //    https://stackoverflow.com/questions/48153246/could-not-write-json
     @JsonIgnore
-    @OneToMany(mappedBy = "entityUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+    @OneToMany(mappedBy = "entityUsers", cascade = CascadeType.ALL, fetch = FetchType.LAZY)//, fetch = FetchType.EAGER
     private Collection<EntityContacts> entityContacts;
 
     public static enum Gender {
