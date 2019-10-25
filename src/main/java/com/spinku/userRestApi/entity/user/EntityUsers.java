@@ -1,5 +1,6 @@
 package com.spinku.userRestApi.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -65,8 +66,10 @@ public class EntityUsers implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
-    @OneToMany(mappedBy = "id")//FetchType.LAZY //FetchType.EAGER
-    private List<EntityContacts> entityContacts;
+//    https://stackoverflow.com/questions/48153246/could-not-write-json
+    @JsonIgnore
+    @OneToMany(mappedBy = "entityUsers", cascade = CascadeType.ALL, fetch = FetchType.EAGER)//, fetch = FetchType.LAZY
+    private Collection<EntityContacts> entityContacts;
 
     public static enum Gender {
 
@@ -79,7 +82,7 @@ public class EntityUsers implements Serializable {
     public EntityUsers() {
     }
 
-    public EntityUsers(Long id, String userName, String roleName, String userPass, String passUser, String address, String nomorIMEI, boolean isActive, String email, Date dateRegister, Date dateLasetLogin, String timeLastLogin, String sesionID, String device_id_login, String token, Gender gender, List<EntityContacts> entityContacts) {
+    public EntityUsers(Long id, String userName, String roleName, String userPass, String passUser, String address, String nomorIMEI, boolean isActive, String email, Date dateRegister, Date dateLasetLogin, String timeLastLogin, String sesionID, String device_id_login, String token, Gender gender, Collection<EntityContacts> entityContacts) {
         this.id = id;
         this.userName = userName;
         this.roleName = roleName;
@@ -155,11 +158,11 @@ public class EntityUsers implements Serializable {
         this.nomorIMEI = nomorIMEI;
     }
 
-    public boolean isActive() {
+    public boolean isIsActive() {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
+    public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
 
@@ -227,21 +230,15 @@ public class EntityUsers implements Serializable {
         this.gender = gender;
     }
 
-    public boolean isIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(boolean isActive) {
-        this.isActive = isActive;
-    }
-
-    public List<EntityContacts> getEntityContacts() {
+    public Collection<EntityContacts> getEntityContacts() {
         return entityContacts;
     }
 
-    public void setEntityContacts(List<EntityContacts> entityContacts) {
+    public void setEntityContacts(Collection<EntityContacts> entityContacts) {
         this.entityContacts = entityContacts;
     }
+
+   
 
     @Override
     public int hashCode() {

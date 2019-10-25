@@ -11,9 +11,6 @@ import com.spinku.userRestApi.entity.user.EntityUsers;
 
 @Repository("contactDao")
 public class EntityContactsDao {
-//    @Qualifier("datasource2")
-//    @Autowired
-//    private DataSource dataSource;
 
     @PersistenceContext(unitName = "dbuserPU")
     private EntityManager entityManagerContact;
@@ -23,8 +20,12 @@ public class EntityContactsDao {
     }
 
     public List<EntityContacts> selectAllContact(Long id) {
-        Query query = entityManagerContact.createQuery("FROM EntityContacts c where c.id.id = " + id + " ");
-        System.out.println("query : " + query);
+//        Query query = entityManagerContact.createQuery("FROM EntityContacts c where c.id.id = " + id s);
+//        System.out.println("id : " + id);
+//        System.out.println("query.getResultList()" + query.getResultList());
+        Query query = entityManagerContact.createQuery("select object(o) from EntityContacts as o LEFT JOIN o.entityUsers as u where u.id = " + id);
+//        return entityManagerContact.createQuery("select object(o) from EntityContacts as o LEFT JOIN o.entityUsers as u where u.id = " + id).getResultList();
+//        System.out.println("query : " + query);
 //        System.out.println("query.getResultList()" + query.getResultList());
 
         return (List<EntityContacts>) query.getResultList();

@@ -11,10 +11,6 @@ import com.spinku.userRestApi.entity.Ofuser;
 
 @Repository("userDao")
 public class UserDao {
-//    @Qualifier("datasource1")
-//    @Autowired
-//    private DataSource dataSource;
-
     @PersistenceContext(unitName = "openFirePU")
     private EntityManager entityManagerUser;
 

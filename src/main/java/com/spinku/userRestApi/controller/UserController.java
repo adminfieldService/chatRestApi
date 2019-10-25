@@ -131,8 +131,10 @@ public class UserController {
                     .signWith((SignatureAlgorithm) sing, "secretkey").compact();
             type = "JWT";
             message = "Success Sign In.";
-
+//            viewAllContact(2l);
+            System.out.println("viewAllContact"+viewAllContact(2l).listIterator());
         }
+        
         jsonobj.put("typ", type);
         jsonobj.put("alg", sing);
         jsonobj.put("token", jwtToken);
@@ -144,7 +146,7 @@ public class UserController {
 
     @GetMapping("/api/viewallcontact")
     public List<EntityContacts> viewAllContact(Long id) {
-        id = 2l;
+//        id = 2l;
 //        System.out.println("contactService 1:" + contactService);
 //        System.out.println("contactService :" + contactService.getAllContact());
         return contactService.getAllContact(id);

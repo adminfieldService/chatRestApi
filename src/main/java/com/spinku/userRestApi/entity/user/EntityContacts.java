@@ -40,21 +40,21 @@ public class EntityContacts implements Serializable {
     @Column(name = "photo")
     private String photo;
 
-    @ManyToOne(fetch = FetchType.LAZY)// FetchType.EAGER
-    @JoinColumn(name = "id", referencedColumnName = "id")//
-    private EntityUsers id;
+    @ManyToOne()
+    @JoinColumn(name = "id")
+    private EntityUsers entityUsers;
 
     public EntityContacts() {
 
     }
 
-    public EntityContacts(Long contactId, String userName, String email, String realname, String photo, EntityUsers id) {
+    public EntityContacts(Long contactId, String userName, String email, String realname, String photo, EntityUsers entityUsers) {
         this.contactId = contactId;
         this.userName = userName;
         this.email = email;
         this.realname = realname;
         this.photo = photo;
-        this.id = id;
+        this.entityUsers = entityUsers;
     }
 
     public Long getContactId() {
@@ -97,16 +97,13 @@ public class EntityContacts implements Serializable {
         this.photo = photo;
     }
 
-    public EntityUsers getId() {
-        return id;
+    public EntityUsers getEntityUsers() {
+        return entityUsers;
     }
 
-    public void setId(EntityUsers id) {
-        this.id = id;
+    public void setEntityUsers(EntityUsers entityUsers) {
+        this.entityUsers = entityUsers;
     }
-
-    
-    
 
     @Override
     public int hashCode() {
