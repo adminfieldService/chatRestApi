@@ -35,7 +35,6 @@ public class ContactService {
 //        return contactDao.selectAllUser();
 //
 //    }
-
     @Transactional
     public List<EntityContacts> findByIdUser(Long id_user) {
         return contactDao.findByIdUser(id_user);

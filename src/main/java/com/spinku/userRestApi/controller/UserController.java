@@ -1,5 +1,6 @@
 package com.spinku.userRestApi.controller;
 
+import com.google.gson.Gson;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import com.spinku.userRestApi.service.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @RestController
@@ -165,7 +167,7 @@ public class UserController {
                 message = "Success Sign In.";
 
 //            System.out.println("viewAllContact" + viewAllContact(2l).listIterator());
-                viewAllContact(jsonobj, 2l, type, sing, jwtToken, message, uname);
+                getContact(jsonobj, 2l, type, sing, jwtToken, message, uname);
             }
             return jsonobj.toString();
         }
@@ -177,23 +179,34 @@ public class UserController {
 //        jsonobj.put("uname", uname);
     }
 
-    @GetMapping("/api/viewallcontact")
+    @GetMapping("/api/getContact")
 //  public List<EntityContacts> viewAllContact(Long id, String type, Object o, String token, String message, String uname) {
-    public List<EntityContacts> viewAllContact(JSONObject json, Long id, String type, Object o, String token, String message, String uname) {
+    public String getContact(JSONObject json, Long id, String type, Object o, String token, String message, String uname) {
 //        id = 2l;
-//        String contacts = "";
-//        contacts = contactService.getAllContact(id).toString();
-//        System.out.println(" viewAllContact :" + id + ";" + type + ";" + o + ";" + token + ";" + message + ";" + uname);
-        System.out.println("contactService id:" + id);
+        System.out.println("getContact id:" + id);
+        String contacts = String.valueOf(contactService.getAllContact(id));
+        //        System.out.println(" viewAllContact :" + id + ";" + type + ";" + o + ";" + token + ";" + message + ";" + uname);
+        ;
 //        System.out.println("contactService :" + contactService.getAllContact(id));
 
-//        json.put("token", token);
-//        json.put("message", message);
-//        json.put("uname", uname);
-//        json.put("contacts", contacts);
-//        JSONObject jsonNilai = new JSONObject();
-//        jsonNilai.put("nilai", contactService.getAllContact(id));
-//        return jsonobj.toString();
+        json.put("token", token);
+        json.put("message", message);
+        json.put("uname", uname);
+        json.put("contacts", contacts);
+//        json.put("nilai", contactService.getAllContact(id));
+        return json.toString();
+//        return contactService.getAllContact(id);
+    }
+
+    @GetMapping("/api/viewallcontact")
+    public List<EntityContacts> viewAllContact(Long id) {
+//    public String viewAllContact(Long id) {
+        id = 2l;
+        System.out.println("contactService id:" + id);
+//       
+//        String json = new Gson().toJson(contactService.getAllContact(id));
+
+//        return json;
         return contactService.getAllContact(id);
     }
 
