@@ -18,14 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spinku.userRestApi.entity.Ofuser;
 import com.spinku.userRestApi.entity.user.EntityContacts;
-import com.spinku.userRestApi.entity.user.EntityUsers;
 import com.spinku.userRestApi.service.ContactService;
 import com.spinku.userRestApi.service.UserService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+//import org.json.JSONObject;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 public class UserController {
@@ -96,6 +98,7 @@ public class UserController {
 
     @PostMapping(path = "/api/login")
 //    public String login(@RequestBody Ofuser login) throws ServletException {
+    @ResponseBody
     public String login(@RequestBody Ofuser login) throws ServletException {
         String jwtToken = "";
         Object sing = "";
@@ -179,26 +182,26 @@ public class UserController {
 //        jsonobj.put("uname", uname);
     }
 
-    @GetMapping("/api/getContact")
-//  public List<EntityContacts> viewAllContact(Long id, String type, Object o, String token, String message, String uname) {
+//    @GetMapping("/api/getContact")
+//    public List<EntityContacts> viewAllContact(Long id, String type, Object o, String token, String message, String uname) {
+//    @ResponseBody
     public String getContact(JSONObject json, Long id, String type, Object o, String token, String message, String uname) {
 //        id = 2l;
         System.out.println("getContact id:" + id);
         String contacts = String.valueOf(contactService.getAllContact(id));
         //        System.out.println(" viewAllContact :" + id + ";" + type + ";" + o + ";" + token + ";" + message + ";" + uname);
-        ;
-//        System.out.println("contactService :" + contactService.getAllContact(id));
-
         json.put("token", token);
         json.put("message", message);
         json.put("uname", uname);
-        json.put("contacts", contacts);
-//        json.put("nilai", contactService.getAllContact(id));
+//        json.put("contacts", contacts);
+        json.put("nilai", contactService.getAllContact(id));
         return json.toString();
 //        return contactService.getAllContact(id);
     }
 
-    @GetMapping("/api/viewallcontact")
+//    @GetMapping("/api/viewallcontact")
+    @RequestMapping(value = "/api/viewallcontact", method = RequestMethod.GET)
+    @ResponseBody
     public List<EntityContacts> viewAllContact(Long id) {
 //    public String viewAllContact(Long id) {
         id = 2l;

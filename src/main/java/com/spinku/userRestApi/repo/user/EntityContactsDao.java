@@ -41,8 +41,14 @@ public class EntityContactsDao {
 
     @SuppressWarnings("unchecked")
     public List<EntityContacts> findByIdUser(Long id_user) {
+        try {
+            return entityManagerContact.createNamedQuery("EntityContacts.findByIdUser").setParameter("id", id_user).getResultList();
+        } catch (Exception ex) {
+//            LogSystem.error(getClass(), e);
+            System.out.println("ERROR: " + ex.getMessage());
+            return null;
 
-        return entityManagerContact.createNamedQuery("EntityContacts.findByIdUser").setParameter("id", id_user).getResultList();
+        }
 
     }
 
